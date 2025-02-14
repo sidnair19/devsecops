@@ -1,0 +1,41 @@
+{
+    "name": "devsecops-project",
+    "version": "1.0.0",
+    "description": "A DevSecOps project for managing security across environments.",
+    "main": "server/server.js",
+    "scripts": {
+        "start": "node server/server.js",
+        "test": "jest --coverage",
+        "lint": "eslint ."
+    },
+    "dependencies": {
+        "axios": "^1.7.9",
+        "bcryptjs": "^2.4.3",
+        "dotenv": "^16.4.7",
+        "express": "^4.17.1",
+        "jsonwebtoken": "^9.0.2",
+        "kubernetes-client": "^0.0.1",
+        "mongoose": "^6.0.12"
+    },
+    "devDependencies": {
+        "@babel/preset-env": "^7.15.6",
+        "@babel/register": "^7.15.3",
+        "eslint": "^8.1.0",
+        "jest": "^27.5.1",
+        "supertest": "^6.1.6"
+    },
+    "jest": {
+        "testEnvironment": "node"
+    },
+    "eslintConfig": {
+        "env": {
+            "node": true,
+            "jest": true
+        },
+        "extends": "eslint:recommended",
+        "rules": {
+            "no-unused-vars": "warn",
+            "no-console": "off"
+        }
+    }
+}
