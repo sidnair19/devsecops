@@ -20,6 +20,11 @@ This project demonstrates a comprehensive DevSecOps pipeline implementation. The
    - Real-time monitoring of deployments.
    - Centralized logging for debugging and tracking.
 
+5. **Security Scanning**:
+   - **SonarQube**: Static Application Security Testing (SAST) to detect code vulnerabilities.
+   - **Trivy**: Container image vulnerability scanning.
+   - **Grype**: Additional container security scanning for comprehensive vulnerability assessment.
+
 ---
 
 ## Application Structure
@@ -65,89 +70,85 @@ devsecops-project/
 ```
 
 ---
+Installation
+Clone the Repository:
 
-## Getting Started
+git clone <repository-url>
+cd devsecops-project
+Install Dependencies:
 
-### Prerequisites
-- Node.js (v16 or later)
-- Docker (for containerization)
-- Kubernetes CLI (kubectl)
-- Git
+npm install
+Set Up Environment Variables:
 
-### Installation
-1. **Clone the Repository:**
-   ```bash
-   git clone <repository-url>
-   cd devsecops-project
-   ```
+Create a .env file in the root directory.
+Add the following variables:
+PORT=5000
+MONGO_URI=<your-mongodb-connection-string>
+KUBERNETES_CLUSTER=<cluster-name>
+Start the Application:
 
-2. **Install Dependencies:**
-   ```bash
-   npm install
-   ```
+npm start
+The server runs on http://localhost:5000 by default.
 
-3. **Set Up Environment Variables:**
-   - Create a `.env` file in the root directory.
-   - Add the following variables:
-     ```env
-     PORT=5000
-     MONGO_URI=<your-mongodb-connection-string>
-     KUBERNETES_CLUSTER=<cluster-name>
-     ```
+Scripts
+Build Pipeline:
 
-4. **Start the Application:**
-   ```bash
-   npm start
-   ```
-   The server runs on `http://localhost:5000` by default.
+node scripts/buildPipeline.js
+Deploy Kubernetes Cluster:
 
----
+node scripts/deployCluster.js
+Scan Container Images:
 
-## Scripts
-- **Build Pipeline:**
-  ```bash
-  node scripts/buildPipeline.js
-  ```
+node scripts/scanImages.js
+Testing
+Run Unit Tests:
 
-- **Deploy Kubernetes Cluster:**
-  ```bash
-  node scripts/deployCluster.js
-  ```
+npm run test:unit
+Run Integration Tests:
 
-- **Scan Container Images:**
-  ```bash
-  node scripts/scanImages.js
-  ```
+npm run test:integration
+CI/CD Pipeline
+This project uses GitHub Actions for CI/CD automation. The workflow is defined in .github/workflows/ci-cd.yml. On every push to the main branch, the pipeline will:
 
----
+Install dependencies.
+Run unit and integration tests.
+Build and push Docker images to the container registry.
+Deploy to the Kubernetes cluster.
 
-## Testing
-1. **Run Unit Tests:**
-   ```bash
-   npm run test:unit
-   ```
+## Security Scanning Details
 
-2. **Run Integration Tests:**
-   ```bash
-   npm run test:integration
-   ```
+### **SonarQube - Static Application Security Testing (SAST)**
+SonarQube is integrated into the pipeline to analyze source code and detect security vulnerabilities.
+#### Running SonarQube Scan:
+```bash
+sonar-scanner -Dsonar.projectKey=devsecops -Dsonar.sources=. -Dsonar.host.url=http://localhost:9000
+```
+#### Reports Generated:
+- Code Smells
+- Security Hotspots
+- Vulnerability Reports
 
----
+### **Trivy - Container Image Security Scanning**
+Trivy is used to scan container images for vulnerabilities in dependencies and configurations.
+#### Running Trivy Scan:
+```bash
+trivy image <your-container-image>
+```
+#### Reports Generated:
+- Critical vulnerabilities
+- High-risk vulnerabilities
+- Package-related security issues
 
-## CI/CD Pipeline
-This project uses GitHub Actions for CI/CD automation. The workflow is defined in `.github/workflows/ci-cd.yml`. On every push to the `main` branch, the pipeline will:
-1. Install dependencies.
-2. Run unit and integration tests.
-3. Build and push Docker images to the container registry.
-4. Deploy to the Kubernetes cluster.
-
----
-
-## Monitoring and Logging
-1. **Monitoring:**
-   - Use tools like Prometheus or Grafana to visualize metrics.
-2. **Logging:**
-   - Logs are stored in the `logs/app.log` file.
+### **Grype - Advanced Container Security Analysis**
+Grype provides an in-depth vulnerability scan for container images and packages.
+#### Running Grype Scan:
+```bash
+grype <your-container-image>
+```
+#### Reports Generated:
+- Exploitable security vulnerabilities
+- CVE analysis
+- Dependency security issues
 
 ---
 
@@ -169,3 +170,4 @@ This project is licensed under the [MIT License](LICENSE).
 For any questions or feedback, feel free to reach out:
 - **Email:** siddharthdileep2003@gmail.com
 - **GitHub:** [(https://github.com/sidnair19/devsecops.git)]
+
